@@ -14,10 +14,12 @@ export default async function handler(req, res) {
         const emailjsApiUrl = 'https://api.emailjs.com/api/v1.0/email/send';
         const serviceId = process.env.EMAILJS_SERVICE_ID; // Set this in your Vercel environment variables
         const userId = process.env.EMAILJS_PUBLIC_KEY; // Set this in your Vercel environment variables
+        const waitlistTemplateId = process.env.EMAILJS_WAITLIST_TEMPLATE_ID; // Set this in your Vercel environment variables
+        const demoTemplateId = process.env.EMAILJS_DEMO_TEMPLATE_ID; // Set this in your Vercel environment variables
 
         // Check if required environment variables are available
-        if (!serviceId || !userId) {
-            return res.status(500).json({ success: false, message: 'Missing EmailJS credentials' });
+        if (!serviceId || !userId || !waitlistTemplateId || !demoTemplateId) {
+            return res.status(500).json({ success: false, message: 'Missing EmailJS credentials or template IDs' });
         }
 
         // Initialize templateId and templateParams based on the form type
@@ -26,14 +28,14 @@ export default async function handler(req, res) {
 
         // Determine the template and parameters based on form type
         if (formType === 'waitlist') {
-            templateId = process.env.EMAILJS_WAITLIST_TEMPLATE_ID; // Set this in your Vercel environment variables
+            templateId = waitlistTemplateId;
             templateParams = {
                 email,
                 formType: 'Waitlist',
                 message: 'User joined the waiting list.',
             };
         } else if (formType === 'demoRequest') {
-            templateId = process.env.EMAILJS_DEMO_TEMPLATE_ID; // Set this in your Vercel environment variables
+            templateId = demoTemplateId;
             templateParams = {
                 name,
                 email,
@@ -67,9 +69,18 @@ export default async function handler(req, res) {
             return res.status(200).json({ success: true, message: 'Email sent successfully' });
         } catch (error) {
             // Improved error logging
-            console.error('Error sending email:', error.response?.data || error.message);
-
-            return res.status(500).json({ success: false, message: 'Failed to send email' });
+            if (error.response) {
+                // Log the response from EmailJS
+                console.error('EmailJS Error:', error.response.data);
+                return res.status(error.response.status || 500).json({
+                    success: false,
+                    message: `EmailJS error: ${error.response.data.message || 'Failed to send email'}`,
+                });
+            } else {
+                // Log the error message if no response object is available
+                console.error('Error sending email:', error.message);
+                return res.status(500).json({ success: false, message: 'Failed to send email' });
+            }
         }
     } else {
         // Handle unsupported methods
