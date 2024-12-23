@@ -13,46 +13,62 @@ export default async function handler(req, res) {
         // Setup EmailJS API URL and credentials
         const emailjsApiUrl = 'https://api.emailjs.com/api/v1.0/email/send';
         const serviceId = process.env.EMAILJS_SERVICE_ID; // Set this in your Vercel environment variables
-        const userId = process.env.EMAILJS_USER_ID; // Set this in your Vercel environment variables
+        const userId = process.env.EMAILJS_PUBLIC_KEY; // Set this in your Vercel environment variables
+
+        // Check if required environment variables are available
+        if (!serviceId || !userId) {
+            return res.status(500).json({ success: false, message: 'Missing EmailJS credentials' });
+        }
 
         // Initialize templateId and templateParams based on the form type
         let templateId = '';
         let templateParams = {};
 
-        // Form Type - Waitlist or Demo Request
+        // Determine the template and parameters based on form type
         if (formType === 'waitlist') {
             templateId = process.env.EMAILJS_WAITLIST_TEMPLATE_ID; // Set this in your Vercel environment variables
             templateParams = {
-                email: email,
+                email,
                 formType: 'Waitlist',
                 message: 'User joined the waiting list.',
             };
         } else if (formType === 'demoRequest') {
             templateId = process.env.EMAILJS_DEMO_TEMPLATE_ID; // Set this in your Vercel environment variables
             templateParams = {
-                name: name,
-                email: email,
-                school: school,
-                message: message,
+                name,
+                email,
+                school,
+                message,
                 formType: 'Demo Request',
             };
         } else {
             return res.status(400).json({ success: false, message: 'Invalid form type' });
         }
 
-        // Send the email via EmailJS API
+        // Send the email using EmailJS API
         try {
-            const response = await axios.post(emailjsApiUrl, {
-                service_id: serviceId,
-                template_id: templateId,
-                user_id: userId,
-                template_params: templateParams,
-            });
+            // eslint-disable-next-line no-unused-vars
+            const response = await axios.post(
+                emailjsApiUrl,
+                {
+                    service_id: serviceId,
+                    template_id: templateId,
+                    user_id: userId,
+                    template_params: templateParams,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
             // Return success response
             return res.status(200).json({ success: true, message: 'Email sent successfully' });
         } catch (error) {
-            console.error('Error sending email:', error);
+            // Improved error logging
+            console.error('Error sending email:', error.response?.data || error.message);
+
             return res.status(500).json({ success: false, message: 'Failed to send email' });
         }
     } else {
