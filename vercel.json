@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "public/**/*",
+        "use": "@vercel/static"
+      },
+      {
+        "src": "pages/api/send-email.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/send-email",
+        "dest": "/pages/api/send-email.js"
+      }
+    ]
+  }
+  
