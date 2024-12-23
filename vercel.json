@@ -4,22 +4,15 @@
       {
         "src": "public/**/*",
         "use": "@vercel/static"
-      },
-      {
-        "src": "pages/api/send-email.js",
-        "use": "@vercel/node"
       }
+      
     ],
     "routes": [
       {
         "src": "/(.*)",
         "dest": "/public/$1"
-      },
-      {
-        
-        "src": "/api/send-email",
-        "dest": "/pages/api/send-email.js"
       }
+      
     ]
   }
   
