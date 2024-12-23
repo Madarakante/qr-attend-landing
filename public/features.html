@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Attend - Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .feature-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .feature-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-blue-600">QR Attend</div>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a></li>
+                    <li><a href="features.html" class="text-gray-600 hover:text-blue-600">Features</a></li>
+                    <li><a href="about.html" class="text-gray-600 hover:text-blue-600">About</a></li>
+                    <li><a href="#contact" class="text-gray-600 hover:text-blue-600">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold text-center mb-12">QR Attend Features</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card bg-gray-50 rounded-lg p-6 shadow-md">
+                    <div class="feature-icon text-4xl mb-4 text-blue-500">📱</div>
+                    <h2 class="text-xl font-semibold mb-2">Simple QR Scanning</h2>
+                    <p class="text-gray-600">Effortlessly mark attendance by scanning student QR codes with any smartphone.</p>
+                </div>
+                <div class="feature-card bg-gray-50 rounded-lg p-6 shadow-md">
+                    <div class="feature-icon text-4xl mb-4 text-blue-500">📊</div>
+                    <h2 class="text-xl font-semibold mb-2">Real-Time Data</h2>
+                    <p class="text-gray-600">Access up-to-date attendance information instantly from anywhere.</p>
+                </div>
+                <div class="feature-card bg-gray-50 rounded-lg p-6 shadow-md">
+                    <div class="feature-icon text-4xl mb-4 text-blue-500">🔒</div>
+                    <h2 class="text-xl font-semibold mb-2">Secure and Paperless</h2>
+                    <p class="text-gray-600">Eliminate paper records and ensure data security with cloud storage.</p>
+                </div>
+                <div class="feature-card bg-gray-50 rounded-lg p-6 shadow-md">
+                    <div class="feature-icon text-4xl mb-4 text-blue-500">🔌</div>
+                    <h2 class="text-xl font-semibold mb-2">Easy Integration</h2>
+                    <p class="text-gray-600">Seamlessly integrate with existing school management systems.</p>
+                </div>
+                <div class="feature-card bg-gray-50 rounded-lg p-6 shadow-md">
+                    <div class="feature-icon text-4xl mb-4 text-blue-500">📈</div>
+                    <h2 class="text-xl font-semibold mb-2">Attendance Analytics</h2>
+                    <p class="text-gray-600">Generate insightful reports and track attendance trends over time.</p>
+                </div>
+                <div class="feature-card bg-gray-50 rounded-lg p-6 shadow-md">
+                    <div class="feature-icon text-4xl mb-4 text-blue-500">🔔</div>
+                    <h2 class="text-xl font-semibold mb-2">Automated Notifications</h2>
+                    <p class="text-gray-600">Send automatic alerts to parents for absent students or important updates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 QR Attend by bitsAura. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

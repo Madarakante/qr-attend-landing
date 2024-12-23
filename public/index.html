@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Attend - Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+    (function(){
+        emailjs.init({
+            publicKey: "CZwFZiO7cYePX3Fd9",
+        });
+    })();
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-animation {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .modal-content {
+            transform: scale(0.9);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal-animation.show .modal-content {
+            transform: scale(1);
+        }
+
+        .loader-spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.95); }
+        }
+
+        .loader-show {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .loader-hide {
+            animation: fadeOut 0.3s ease-in forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-blue-600">QR Attend</div>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a></li>
+                    <li><a href="features.html" class="text-gray-600 hover:text-blue-600">Features</a></li>
+                    <li><a href="about.html" class="text-gray-600 hover:text-blue-600">About</a></li>
+                    <li><a href="#contact" class="text-gray-600 hover:text-blue-600">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-center">A Revolution in School Attendance Tracking is Coming Soon!</h1>
+            <p class="text-xl md:text-2xl mb-8 text-center">Streamline attendance with our fast, secure, and paperless QR code-based system.</p>
+            <div class="text-center">
+                <button onclick="openModal()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-full text-lg transition duration-300">
+                    Join Our Waiting List
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About the Product Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-6 text-center">About the Product</h2>
+            <p class="text-lg text-gray-700 text-center max-w-3xl mx-auto">
+                Our innovative QR code-based attendance system will make tracking student attendance quick, easy, and secure. Stay tuned for more details!
+            </p>
+        </div>
+    </section>
+
+    <!-- How It Works / Features Section -->
+    <section id="features" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4 text-blue-500">📱</div>
+                    <h3 class="text-xl font-semibold mb-2">Simple QR Scanning</h3>
+                    <p class="text-gray-700">Teachers can scan students' unique QR codes to instantly mark attendance.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4 text-blue-500">📊</div>
+                    <h3 class="text-xl font-semibold mb-2">Real-Time Data</h3>
+                    <p class="text-gray-700">Attendance data is updated in real-time, available to administrators instantly.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4 text-blue-500">🔒</div>
+                    <h3 class="text-xl font-semibold mb-2">Secure and Paperless</h3>
+                    <p class="text-gray-700">No more paper attendance sheets. All data is securely stored in the cloud.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl mb-4 text-blue-500">🔌</div>
+                    <h3 class="text-xl font-semibold mb-2">Easy Integration</h3>
+                    <p class="text-gray-700">Seamlessly integrates with existing school management systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action (CTA) Section -->
+    <section class="py-16 bg-blue-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Be the First to Know!</h2>
+            <p class="text-xl mb-8">Sign up now to get exclusive updates and be the first to try our QR code attendance system.</p>
+            <div class="space-x-4">
+                <button onclick="openModal()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-full text-lg transition duration-300">
+                    Join Our Waiting List
+                </button>
+                <a href="#contact" class="inline-block bg-transparent hover:bg-blue-700 text-white font-semibold py-3 px-6 border border-white rounded-full text-lg transition duration-300">
+                    Request a Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information or FAQ Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Have Questions?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">FAQ</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold">Is this system easy to set up?</h4>
+                            <p class="text-gray-700">Yes, it integrates seamlessly with existing school management systems.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Can I try the system before committing?</h4>
+                            <p class="text-gray-700">Yes, we offer a demo version for interested schools.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Request a Demo</h3>
+                    <form id="demo-form">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="school" class="block text-gray-700 font-semibold mb-2">School Name</label>
+                            <input type="text" id="school" name="school" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 font-semibold mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                            Request Demo
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 QR Attend by bitsAura. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Waiting List -->
+    <div id="waitlist-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none modal-animation">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 modal-content">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Join Our Waiting List</h3>
+            <p class="text-gray-600 mb-6">Be the first to know when QR Attend launches. Sign up for exclusive updates and early access!</p>
+            <form id="waitlist-form" class="space-y-4">
+                <div>
+                    <label for="waitlist-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="waitlist-email" name="email" placeholder="you@example.com" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                    Join Waiting List
+                </button>
+            </form>
+            <button id="close-modal" class="mt-4 w-full px-4 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Loader Modal -->
+    <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden">
+        <div class="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center transform transition-transform duration-300 scale-95 opacity-0">
+            <div class="loader-spinner mb-4"></div>
+            <p id="loader-message" class="text-gray-700 text-lg font-semibold">Loading...</p>
+            
+            <!-- Success/Failure icons -->
+            <div id="success-icon" class="hidden text-green-500 text-5xl mb-4">✔️</div>
+            <div id="error-icon" class="hidden text-red-500 text-5xl mb-4">❌</div>
+        </div>
+    </div>
+
+    <script>
+
+        function showLoader() {
+            const loader = document.getElementById('loader');
+            const loaderContent = loader.firstElementChild;
+            loader.classList.remove('hidden');
+            loaderContent.classList.add('loader-show');
+            // Hide success/error icons while loading
+            document.getElementById('success-icon').classList.add('hidden');
+            document.getElementById('error-icon').classList.add('hidden');
+            document.getElementById('loader-message').textContent = 'Loading...';
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            const loaderContent = loader.firstElementChild;
+            loaderContent.classList.remove('loader-show');
+            loaderContent.classList.add('loader-hide');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                loaderContent.classList.remove('loader-hide');
+            }, 300);
+        }
+
+        function showSuccess() {
+            document.getElementById('success-icon').classList.remove('hidden');
+            document.getElementById('loader-message').textContent = 'Successfully Added to Waiting List!';
+
+            setTimeout(() => {
+                document.getElementById('success-icon').classList.add('hidden');
+                document.getElementById('loader-message').textContent = 'Loading...';
+            }, 2000);
+        }
+
+        function showError() {
+            document.getElementById('error-icon').classList.remove('hidden');
+            document.getElementById('loader-message').textContent = 'Something went wrong. Please try again.';
+
+            setTimeout(() => {
+                document.getElementById('error-icon').classList.add('hidden');
+                document.getElementById('loader-message').textContent = 'Loading...';
+            }, 2000); // 2 seconds delay
+        }
+
+        function openModal() {
+            const modal = document.getElementById('waitlist-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('waitlist-modal');
+            modal.classList.remove('show');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        document.getElementById('close-modal').addEventListener('click', closeModal);
+
+        // Waitlist Form Submission
+        document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showLoader();
+
+            const email = document.getElementById('waitlist-email').value;
+
+            // Send data to the serverless backend (Replace 'https://your-backend-url.com/send-email' with your actual backend URL)
+            fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    formType: 'waitlist'  // Optional: Can be used to distinguish form types
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    closeModal();
+                    hideLoader();
+                    showSuccess();  // Show success feedback to the user
+                } else {
+                    hideLoader();
+                    showError();  // Show error feedback to the user
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                hideLoader();
+                showError();  // Show error feedback if something goes wrong
+            });
+        });
+
+        // Demo Form Submission
+        document.getElementById('demo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showLoader();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const school = document.getElementById('school').value;
+            const message = document.getElementById('message').value;
+
+            // Send data to the serverless backend (Replace '/api/send-email' with your actual backend URL)
+            fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    school: school,
+                    message: message,
+                    formType: 'demoRequest'  // Optional: Can be used to distinguish form types
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    hideLoader();
+                    showSuccess();  // Show success feedback to the user
+                } else {
+                    hideLoader();
+                    showError();  // Show error feedback to the user
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                hideLoader();
+                showError();  // Show error feedback if something goes wrong
+            });
+        });
+
+
+        // Close modal if clicking outside of it
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('waitlist-modal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
