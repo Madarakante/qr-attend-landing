@@ -12,6 +12,11 @@
     ],
     "routes": [
       {
+        "src": "/(.*)",
+        "dest": "/public/$1"
+      },
+      {
+        
         "src": "/api/send-email",
         "dest": "/pages/api/send-email.js"
       }
